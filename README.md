@@ -38,7 +38,7 @@ your lab station).
 2. Update the CentOS 7.2 install via `yum -y update`.
  
 3. Run ELLIS (`./ellis.sh`). ELLIS will download and install all of the necessary packages
-from the standard CentOS repos, and configure everything automatically. The process should
+from the standard CentOS repos and configure everything automatically. The process should
 take five to ten minutes, depending upon your Internet speed.
  
 4. Copy your enterprise Linux installation media (either CentOS 7 or RHEL 7) into the
