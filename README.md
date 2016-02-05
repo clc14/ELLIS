@@ -35,9 +35,9 @@ The setup process is pretty simple:
 (for a headless lab server) or "Server with GUI" (if you intend to use the lab server as
 your lab station).
 
-2. Update the CentOS 7.2 install via 'yum -y update'.
+2. Update the CentOS 7.2 install via `yum -y update`.
  
-3. Run ELLIS (**./ellis.sh**). ELLIS will download and install all of the necessary packages
+3. Run ELLIS (`./ellis.sh`). ELLIS will download and install all of the necessary packages
 from the standard CentOS repos, and configure everything automatically. The process should
 take five to ten minutes, depending upon your Internet speed.
  
