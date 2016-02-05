@@ -45,7 +45,7 @@ to install your lab VMs.
 
 The setup process is pretty simple:
  
-1. Perform a clean install of CentOS 7.2 OS on your lab host/station, either as a 
+1. Perform a clean install of CentOS 7.2 on your lab host/station, either as a 
 "Minimal Install" (for a headless lab server) or "Server with GUI" (if you intend to 
 use the lab server as your lab station). **NOTE:** Do not provision a separate /home 
 partition. You will need the majority of your disk space to be available under 
