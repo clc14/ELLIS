@@ -27,6 +27,20 @@ By default, ELLIS sets up all of the services under the generic namespace of exa
 If you wish to use a different name space, edit the variables at the top of the script
 before you run ELLIS.
 
+##Requirements
+
+You will need a computer to act as the lab host. This system will run CentOS 7.2 and should
+have reasonable hardware for a VM host. The recommended minimum specifications for the lab
+host are:
+
+- Core i5 processor or better, with Intel-VT support
+- 4GB+ of memory
+- 80GB+ of disk space
+
+You will also require an installation image for the enterprise Linux OS of your choice
+(either CentOS 7 or RHEL 7) in order to build your local repository and to use in order
+to install your lab VMs.
+
 ##Setup
 
 The setup process is pretty simple:
@@ -35,16 +49,20 @@ The setup process is pretty simple:
 (for a headless lab server) or "Server with GUI" (if you intend to use the lab server as
 your lab station).
 
-2. Update the CentOS 7.2 install via `yum -y update`.
- 
-3. Run ELLIS (`./ellis.sh`). ELLIS will download and install all of the necessary packages
-from the standard CentOS repos and configure everything automatically. The process should
-take five to ten minutes, depending upon your Internet speed.
- 
-4. Copy your enterprise Linux installation media (either CentOS 7 or RHEL 7) into the
-/var/www/html/repo directory.
+**NOTE:** Do not provision a separate /home partition. You will need the majority
+of your disk space to be available under /var/lib/libvirt (for your VM disks).
 
-5. Run the provided build scripts to setup VMs (optional).
+2. Update the CentOS 7.2 install via `yum -y update`. Reboot if necessary.
+ 
+3. Log into your lab server (as root), copy the ELLIS script to your lab server (under 
+/root or elsewhere) and then run ELLIS (`./ellis.sh`). ELLIS will download and install all 
+of the required packages from the standard CentOS repos and configure everything automatically.
+The process should take five to ten minutes, depending upon your Internet speed.
+ 
+4. Copy the files from your enterprise Linux installation media (either CentOS 7 or RHEL 7)
+into the /var/www/html/repo directory.
+
+5. Run the provided build scripts to setup your VMs (optional).
 
 ##Lab resources
 
