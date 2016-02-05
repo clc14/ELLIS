@@ -1,7 +1,7 @@
 #ELLIS
-###Enterprise Linux Lab Installer Script
-###For CentOS 7.2
-###Version 0.1 rev. 2016-02-05 
+####Enterprise Linux Lab Installer Script
+####For CentOS 7.2
+####Version 0.1 rev. 2016-02-05 
 
 ##General purpose
 
