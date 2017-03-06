@@ -62,18 +62,18 @@ if [ "$(whoami)" != "root" ]; then
     exit
 fi
 
-## Check to make sure we're running CentOS 7.2
+## Check to make sure we're running CentOS 7.2 or 7.3
 
 if [ -f /etc/redhat-release ]; then
   OS_MAJOR=$(rpm -qa \*-release | grep centos | cut -d"-" -f3)
   OS_MINOR=$(rpm -qa \*-release | grep centos | cut -d"-" -f4 | cut -d"." -f1)
   OS_VERSION=$OS_MAJOR.$OS_MINOR
-  if [ "$OS_VERSION" != "7.2" ]; then
-      echo "ERROR: Incompatible version: This setup script is for CentOS 7.2 only."
+  if [ ! ( "$OS_VERSION" == "7.2" ) || ( "$OS_VERSION" == "7.3" ]; then
+      echo "ERROR: Incompatible version: This setup script is for CentOS 7.2 or 7.3 only."
       exit
   fi
 else
-    echo "ERROR: Incompatible version: This setup script is for CentOS 7.2 only."
+    echo "ERROR: Incompatible version: This setup script is for CentOS 7.2 or 7.3 only."
     exit
 fi
 
