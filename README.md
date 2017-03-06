@@ -40,7 +40,7 @@ You will also require an installation image for the enterprise Linux OS of your 
 (either CentOS 7 or RHEL 7) in order to build your local repository and to use in order
 to install your lab VMs.
 
-##Setup
+##Setup and Installation
 
 The setup process is pretty simple:
  
@@ -55,12 +55,25 @@ partition. You will need the majority of your disk space to be available under
 3. Log into your lab server (as root) and copy the `ellis.sh` script to your server (under 
 /root or elsewhere).
 
-4. Run `./ellis.sh`. ELLIS will download and install all of the required packages from 
-the standard CentOS repos and configure everything automatically. The process should 
-take five to ten minutes, depending on your Internet speed.
+You can clone this repo:
+
+    git clone https://github.com/sdoconnell/ellis.git
+
+You can download the repo [zip file](https://github.com/sdoconnell/ELLIS/archive/master.zip) and extract it.
+
+Or you can download the `ellis.sh` script directly, using curl:
+
+    curl -o transit.sh https://raw.githubusercontent.com/sdoconnell/ellis/master/ellis.sh && chmod 755 ellis.sh
+
+4. Once it is installed, run `./ellis.sh`. ELLIS will download and install all of the 
+required packages from the standard CentOS repos and configure everything automatically.
+The process should take five to ten minutes, depending on your Internet speed and lab server
+hardware resources.
  
 5. Copy all of the files from your enterprise Linux installation media (either CentOS 7 or RHEL 7)
-into the /var/www/html/repo directory.
+into the /var/www/html/repo directory. For example:
+
+    cp -R /media/usbstick/* /var/www/html/repo
 
 5. Run the provided build scripts placed in /root to setup your lab VMs *(optional)*.
 
