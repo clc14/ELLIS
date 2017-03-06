@@ -1115,6 +1115,7 @@ echo ""
 echo "Lab server setup is complete."
 echo ""
 echo "Press any key to continue..."
+read -n 1 -s
 
 elinks http://$LABHOST.$LABDOMAIN
 
