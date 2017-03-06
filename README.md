@@ -52,7 +52,7 @@ partition. You will need the majority of your disk space to be available under
 
 2. Update the CentOS 7.2 install via `yum -y update`. Reboot if necessary.
  
-3. Log into your lab server (as root) and copy the ELLIS script to your server (under 
+3. Log into your lab server (as root) and copy the `ellis.sh` script to your server (under 
 /root or elsewhere).
 
 4. Run `./ellis.sh`. ELLIS will download and install all of the required packages from 
