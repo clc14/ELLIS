@@ -73,7 +73,7 @@ hardware resources.
 5. Copy all of the files from your enterprise Linux installation media (either CentOS 7 or RHEL 7)
 into the /var/www/html/repo directory. For example:
 
-    cp -R /media/usbstick/* /var/www/html/repo
+        cp -R /media/usbstick/* /var/www/html/repo
 
 5. Run the provided build scripts placed in /root to setup your lab VMs *(optional)*.
 
