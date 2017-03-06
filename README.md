@@ -1,12 +1,12 @@
 #ELLIS
-####Enterprise Linux Lab Installer Script for CentOS 7.2
+####Enterprise Linux Lab Installer Script
 
 ##General purpose
 
 This is a script to quickly and easily setup a pre-configured lab
 environment useful for studying to obtain enterprise Linux certifications.
 
-This script is intended to be run on a clean, updated installation of CentOS 7.2.
+This script is intended to be run on a clean, updated installation of [CentOS](http://centos.org/).
 It is presumed that you have configured networking during the install, and that the
 host machine has access to the Internet.
 
@@ -28,7 +28,7 @@ before you run ELLIS.
 
 ##Requirements
 
-You will need a computer to act as the lab host. This system will run CentOS 7.2 and should
+You will need a computer to act as the lab host. This system will run CentOS and should
 have reasonable hardware for a VM host. The recommended minimum specifications for the lab
 host are:
 
@@ -36,21 +36,26 @@ host are:
 - 4GB+ of memory
 - 80GB+ of disk space
 
+This installer has been tested with the following versions of CentOS:
+
+- 7.2 (1511)
+- 7.3 (1611) *currently testing*
+
 You will also require an installation image for the enterprise Linux OS of your choice
-(either CentOS 7 or RHEL 7) in order to build your local repository and to use in order
+(either [CentOS](https://www.centos.org/download/) or [RHEL](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux) in order to build your local repository and to use in order
 to install your lab VMs.
 
 ##Setup and Installation
 
 The setup process is pretty simple:
  
-1. Perform a clean install of CentOS 7.2 on your lab host/station, either as a 
+1. Perform a clean install of CentOS on your lab host/station, either as a 
 "Minimal Install" (for a headless lab server) or "Server with GUI" (if you intend to 
 use the lab server as your lab station). **NOTE:** Do not provision a separate /home 
 partition. You will need the majority of your disk space to be available under 
 /var/lib/libvirt (for your VM disks).
 
-2. Update the CentOS 7.2 install via `yum -y update`. Reboot if necessary.
+2. Update the CentOS install via `yum -y update`. Reboot if necessary.
  
 3. Log into your lab server (as root) and copy the `ellis.sh` script to your server (under 
 /root or elsewhere).
