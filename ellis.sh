@@ -9,6 +9,14 @@
 
 ELLISVER="0.2"
 
+REQVER="7.3"
+CHECKVER=true
+
+## This script is tested only against the current version of CentOS.
+## If you want to run this script on an unsupported version of CentOS
+## you can disable version checking by uncommenting the following line.
+#CHECKVER=false
+
 ##################################
 ## Begin user-defined variables ##
 ##################################
@@ -68,12 +76,12 @@ if [ -f /etc/redhat-release ]; then
   OS_MAJOR=$(rpm -qa \*-release | grep centos | cut -d"-" -f3);
   OS_MINOR=$(rpm -qa \*-release | grep centos | cut -d"-" -f4 | cut -d"." -f1);
   OS_VERSION=$OS_MAJOR.$OS_MINOR;
-  if [ ! ( "$OS_VERSION" == "7.2" ) || ( "$OS_VERSION" == "7.3" ]; then
-      echo "ERROR: Incompatible version: This setup script is for CentOS 7.2 or 7.3 only." >&2;
+  if [ "$CHECKVER" == true ] && [ "$OS_VERSION" != "$REQVER" ]; then
+      echo "ERROR: Incompatible version: This setup script is for CentOS $REQVER only." >&2;
       exit 1;
   fi
 else
-    echo "ERROR: Incompatible version: This setup script is for CentOS 7.2 or 7.3 only." >&2;
+    echo "ERROR: Incompatible version: This setup script is for CentOS only." >&2;
     exit 1;
 fi
 
