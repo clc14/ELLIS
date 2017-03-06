@@ -1,10 +1,9 @@
 #ELLIS
 ####Enterprise Linux Lab Installer Script for CentOS 7.2
-####Version 0.1 rev. 2016-02-05 
 
 ##General purpose
 
-The purpose of this script is to quickly and easily setup a pre-configured lab
+This is a script to quickly and easily setup a pre-configured lab
 environment useful for studying to obtain enterprise Linux certifications.
 
 This script is intended to be run on a clean, updated installation of CentOS 7.2.
@@ -56,12 +55,12 @@ partition. You will need the majority of your disk space to be available under
 3. Log into your lab server (as root), copy the ELLIS script to your lab server (under 
 /root or elsewhere) and then run ELLIS (`./ellis.sh`). ELLIS will download and install all 
 of the required packages from the standard CentOS repos and configure everything automatically.
-The process should take five to ten minutes, depending upon your Internet speed.
+The process should take five to ten minutes, depending on your Internet speed.
  
 4. Copy the files from your enterprise Linux installation media (either CentOS 7 or RHEL 7)
 into the /var/www/html/repo directory.
 
-5. Run the provided build scripts to setup your VMs (optional).
+5. Run the provided build scripts placed in /root to setup your lab VMs *(optional)*.
 
 ##Lab resources
 

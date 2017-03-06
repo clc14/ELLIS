@@ -1,36 +1,13 @@
 #!/bin/bash
 
-############################################
-##                                        ##
-##                 ELLIS                  ## 
-##            Enterprise Linux            ##
-##          Lab Installer Script          ##
-##             For CentOS 7.2             ##
-##      Version 0.1  rev. 2016-02-05      ##
-##                                        ##
-##             Sean O'Connell             ##
-##          <sean@sdoconnell.net>         ##
-##                                        ##
-############################################
+# Name: ELLIS
+# Description: A script is to quickly and easily setup a pre-configured lab 
+# environment useful for studying to obtain enterprise Linux certifications.
+# Author: Sean O'Connell <sean@sdoconnell.net>
+# Version: 0.2 2017-03-06
+# License: GPLv2 (https://www.gnu.org/licenses/gpl-2.0.en.html)
 
 ELLISVER="0.1"
-
-## License
-##
-## This program is free software: you can redistribute it and/or modify  
-## it under the terms of the GNU General Public License as published by  
-## the Free Software Foundation, either version 3 of the License, or     
-## (at your option) any later version.                                   
-##                                                                       
-## This program is distributed in the hope that it will be useful,       
-## but WITHOUT ANY WARRANTY; without even the implied warranty of        
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         
-## GNU General Public License for more details.                          
-##                                                                       
-## You should have received a copy of the GNU General Public License     
-## along with this program.  If not, see <http://www.gnu.org/licenses/>. 
-##
-######################################################################################
 
 ##################################
 ## Begin user-defined variables ##
