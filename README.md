@@ -52,12 +52,14 @@ partition. You will need the majority of your disk space to be available under
 
 2. Update the CentOS 7.2 install via `yum -y update`. Reboot if necessary.
  
-3. Log into your lab server (as root), copy the ELLIS script to your lab server (under 
-/root or elsewhere) and then run ELLIS (`./ellis.sh`). ELLIS will download and install all 
-of the required packages from the standard CentOS repos and configure everything automatically.
-The process should take five to ten minutes, depending on your Internet speed.
+3. Log into your lab server (as root) and copy the ELLIS script to your server (under 
+/root or elsewhere).
+
+4. Run `./ellis.sh`. ELLIS will download and install all of the required packages from 
+the standard CentOS repos and configure everything automatically. The process should 
+take five to ten minutes, depending on your Internet speed.
  
-4. Copy the files from your enterprise Linux installation media (either CentOS 7 or RHEL 7)
+5. Copy all of the files from your enterprise Linux installation media (either CentOS 7 or RHEL 7)
 into the /var/www/html/repo directory.
 
 5. Run the provided build scripts placed in /root to setup your lab VMs *(optional)*.
