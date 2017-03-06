@@ -2,7 +2,7 @@
 
 # Name: ELLIS
 # Description: A script is to quickly and easily setup a pre-configured lab 
-# environment useful for studying to obtain enterprise Linux certifications.
+#   environment useful for studying to obtain enterprise Linux certifications.
 # Author: Sean O'Connell <sean@sdoconnell.net>
 # Version: 0.2 2017-03-06
 # License: GPLv2 (https://www.gnu.org/licenses/gpl-2.0.en.html)
