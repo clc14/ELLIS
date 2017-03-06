@@ -7,7 +7,7 @@
 # Version: 0.2 2017-03-06
 # License: GPLv2 (https://www.gnu.org/licenses/gpl-2.0.en.html)
 
-ELLISVER="0.1"
+ELLISVER="0.2"
 
 ##################################
 ## Begin user-defined variables ##
@@ -40,7 +40,7 @@ CERTEMAIL="lab@$LABDOMAIN"
 CERTPASSWD="admin"
 
 ## Kernel update URL - this kernel should be newer than the one on the installation media
-KERNUPDURL="http://mirror.centos.org/centos-7/7/updates/x86_64/Packages/kernel-3.10.0-327.4.5.el7.x86_64.rpm"
+KERNUPDURL="http://mirror.centos.org/centos-7/7/updates/x86_64/Packages/kernel-3.10.0-514.10.2.el7.x86_64.rpm"
 
 ################################
 ## End user-defined variables ## 
@@ -58,23 +58,23 @@ echo " "
 ## Check to make sure we're running as root
 
 if [ "$(whoami)" != "root" ]; then
-    echo "ERROR: Insufficient permissions: This setup script must be run as root."
-    exit
+    echo "ERROR: Insufficient permissions: This setup script must be run as root." >&2;
+    exit 1;
 fi
 
 ## Check to make sure we're running CentOS 7.2 or 7.3
 
 if [ -f /etc/redhat-release ]; then
-  OS_MAJOR=$(rpm -qa \*-release | grep centos | cut -d"-" -f3)
-  OS_MINOR=$(rpm -qa \*-release | grep centos | cut -d"-" -f4 | cut -d"." -f1)
-  OS_VERSION=$OS_MAJOR.$OS_MINOR
+  OS_MAJOR=$(rpm -qa \*-release | grep centos | cut -d"-" -f3);
+  OS_MINOR=$(rpm -qa \*-release | grep centos | cut -d"-" -f4 | cut -d"." -f1);
+  OS_VERSION=$OS_MAJOR.$OS_MINOR;
   if [ ! ( "$OS_VERSION" == "7.2" ) || ( "$OS_VERSION" == "7.3" ]; then
-      echo "ERROR: Incompatible version: This setup script is for CentOS 7.2 or 7.3 only."
-      exit
+      echo "ERROR: Incompatible version: This setup script is for CentOS 7.2 or 7.3 only." >&2;
+      exit 1;
   fi
 else
-    echo "ERROR: Incompatible version: This setup script is for CentOS 7.2 or 7.3 only."
-    exit
+    echo "ERROR: Incompatible version: This setup script is for CentOS 7.2 or 7.3 only." >&2;
+    exit 1;
 fi
 
 #######################
