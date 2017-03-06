@@ -62,12 +62,14 @@ partition. You will need the majority of your disk space to be available under
 
     You can clone this repo:
     
+        yum -y install git
         git clone https://github.com/sdoconnell/ellis.git
 
     You can download the repo [zip file](https://github.com/sdoconnell/ELLIS/archive/master.zip) and extract it.
     
     Or you can download the `ellis.sh` script directly, using curl:
     
+        yum -y install curl
         curl -o transit.sh https://raw.githubusercontent.com/sdoconnell/ellis/master/ellis.sh && chmod 755 ellis.sh
 
 4. Once it is installed, run `./ellis.sh`. ELLIS will download and install all of the 
