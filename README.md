@@ -55,15 +55,15 @@ partition. You will need the majority of your disk space to be available under
 3. Log into your lab server (as root) and copy the `ellis.sh` script to your server (under 
 /root or elsewhere).
 
-You can clone this repo:
+    You can clone this repo:
+    
+        git clone https://github.com/sdoconnell/ellis.git
 
-    git clone https://github.com/sdoconnell/ellis.git
-
-You can download the repo [zip file](https://github.com/sdoconnell/ELLIS/archive/master.zip) and extract it.
-
-Or you can download the `ellis.sh` script directly, using curl:
-
-    curl -o transit.sh https://raw.githubusercontent.com/sdoconnell/ellis/master/ellis.sh && chmod 755 ellis.sh
+    You can download the repo [zip file](https://github.com/sdoconnell/ELLIS/archive/master.zip) and extract it.
+    
+    Or you can download the `ellis.sh` script directly, using curl:
+    
+        curl -o transit.sh https://raw.githubusercontent.com/sdoconnell/ellis/master/ellis.sh && chmod 755 ellis.sh
 
 4. Once it is installed, run `./ellis.sh`. ELLIS will download and install all of the 
 required packages from the standard CentOS repos and configure everything automatically.
