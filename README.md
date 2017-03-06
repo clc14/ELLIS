@@ -38,8 +38,9 @@ host are:
 
 This installer has been tested with the following versions of CentOS:
 
-- 7.2 (1511)
-- 7.3 (1611) *currently testing*
+- 7.3 (1611)
+
+Running the script on other versions of CentOS is not recommended.
 
 You will also require an installation image for the enterprise Linux OS of your choice
 (either [CentOS](https://www.centos.org/download/) or [RHEL](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux) in order to build your local repository and to use in order
@@ -63,13 +64,13 @@ partition. You will need the majority of your disk space to be available under
     You can clone this repo:
     
         yum -y install git
-        git clone https://github.com/sdoconnell/ellis.git
+        git clone https://github.com/sdoconnell/ellis.git && cd ellis
+        chmod 755 ellis.sh
 
     You can download the repo [zip file](https://github.com/sdoconnell/ELLIS/archive/master.zip) and extract it.
     
     Or you can download the `ellis.sh` script directly, using curl:
     
-        yum -y install curl
         curl -o transit.sh https://raw.githubusercontent.com/sdoconnell/ellis/master/ellis.sh && chmod 755 ellis.sh
 
 4. Once it is installed, run `./ellis.sh`. ELLIS will download and install all of the 

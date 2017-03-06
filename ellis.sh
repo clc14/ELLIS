@@ -1109,10 +1109,12 @@ chmod 700 /root/mkserver2.sh
 
 ## All done
 clear
-echo " "
+echo ""
 echo "ELLIS: Enterprise Linux Lab Installer Script ver. $ELLISVER"
-echo " "
+echo ""
 echo "Lab server setup is complete."
+echo ""
+echo "Press any key to continue..."
 
 elinks http://$LABHOST.$LABDOMAIN
 
