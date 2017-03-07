@@ -36,14 +36,17 @@ host are:
 - 4GB+ of memory
 - 80GB+ of disk space
 
-This installer has been tested with the following versions of CentOS:
+This installer has been tested with the following version of CentOS:
 
 - 7.3 (1611)
 
-Running the script on other versions of CentOS is not recommended.
+Running the script on other versions of CentOS is not recommended, but can be done by uncommenting
+the following line:
+
+    #CHECKVER=false
 
 You will also require an installation image for the enterprise Linux OS of your choice
-(either [CentOS](https://www.centos.org/download/) or [RHEL](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux) in order to build your local repository and to use in order
+(either [CentOS](https://www.centos.org/download/) or [RHEL](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)) in order to build your local repository and to use in order
 to install your lab VMs.
 
 ##Setup and Installation
