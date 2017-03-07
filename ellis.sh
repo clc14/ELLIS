@@ -312,7 +312,7 @@ cat <<EOF > /etc/samba/smb.conf
 [global]
   workgroup		= $SMBWKGP
   server string		= $LABHOST.$LABDOMAIN
-  hosts_allow		= 127. 192.168.201. .$LABDOMAIN
+  hosts allow		= 127. 192.168.201. .$LABDOMAIN
   interfaces		= lo virbr201 192.168.201.
   passdb backend	= smbpasswd
   security		= user
