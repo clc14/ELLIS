@@ -46,8 +46,8 @@ the following line:
     #CHECKVER=false
 
 You will also require an installation image for the enterprise Linux OS of your choice
-(either [CentOS](https://www.centos.org/download/) or [RHEL](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)) in order to build your local repository and to use in order
-to install your lab VMs.
+(either [CentOS](https://www.centos.org/download/) or [RHEL](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)) 
+in order to build your local repository for use in the installation of your lab VMs.
 
 ##Setup and Installation
 
