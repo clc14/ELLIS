@@ -1,7 +1,7 @@
-#ELLIS
-####Enterprise Linux Lab Installer Script
+# ELLIS
+#### Enterprise Linux Lab Installer Script
 
-##General purpose
+## General purpose
 
 This is a script to quickly and easily setup a pre-configured lab
 environment useful for studying to obtain enterprise Linux certifications.
@@ -26,7 +26,7 @@ By default, ELLIS sets up all of the services under the generic namespace of exa
 If you wish to use a different name space, edit the variables at the top of the script
 before you run ELLIS.
 
-##Requirements
+## Requirements
 
 You will need a computer to act as the lab host. This system will run CentOS and should
 have reasonable hardware for a VM host. The recommended minimum specifications for the lab
@@ -49,7 +49,7 @@ You will also require an installation image for the enterprise Linux OS of your 
 (either [CentOS](https://www.centos.org/download/) or [RHEL](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)) 
 in order to build your local repository for use in the installation of your lab VMs.
 
-##Setup and Installation
+## Setup and Installation
 
 The setup process is pretty simple:
  
@@ -88,7 +88,7 @@ into the /var/www/html/repo directory. For example:
 
 5. Run the provided build scripts placed in /root to setup your lab VMs *(optional)*.
 
-##Lab resources
+## Lab resources
 
 This script installs a web server on the lab host and makes a number of useful lab
 resources available. Links to these resources and documentation about the configured
