@@ -74,7 +74,7 @@ partition. You will need the majority of your disk space to be available under
     
     Or you can download the `ellis.sh` script directly, using curl:
     
-        curl -o transit.sh https://raw.githubusercontent.com/sdoconnell/ellis/master/ellis.sh && chmod 755 ellis.sh
+        curl -o ellis.sh https://raw.githubusercontent.com/sdoconnell/ellis/master/ellis.sh && chmod 755 ellis.sh
 
 4. Once it is installed, run `./ellis.sh`. ELLIS will download and install all of the 
 required packages from the standard CentOS repos and configure everything automatically.
