@@ -29,6 +29,8 @@ SMBWKGP="EXAMPLE"
 KRB5REALM="EXAMPLE.COM"
 KRB5PASSWD="admin"
 LDAPPASSWD="admin"
+LU01PASSWD="password"
+LU02PASSWD="password"
 ADMNPASSWD="admin"
 USERPASSWD="password"
 VMROOTPASS="admin"
@@ -113,8 +115,8 @@ restorecon -Rv /home/guests
 ## Create lab users
 useradd -d /home/guests/ldapuser01 -u 2001 ldapuser01
 useradd -d /home/guests/ldapuser02 -u 2002 ldapuser02
-echo password | passwd --stdin ldapuser01
-echo password | passwd --stdin ldapuser02
+echo $LU01PASSWD | passwd --stdin ldapuser01
+echo $LU02PASSWD | passwd --stdin ldapuser02
 
 ## Add dummy files and directories to homes
 echo "File1 contents" > /home/guests/ldapuser01/file1
