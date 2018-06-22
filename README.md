@@ -87,7 +87,7 @@ automatically. The process should take five to ten minutes, depending on your In
 and lab server hardware resources.
  
 5. Copy all of the files from your enterprise Linux installation media (either CentOS 7.5 or RHEL 7.5)
-into the /var/www/html/repo directory on the lab server. For example, to copy the files from an ISO image:
+into the `/var/www/html/repo` directory on the lab server. For example, to copy the files from an ISO image:
 
         mkdir -p /mnt/centos
         mount CentOS-7-x86_64-DVD-1804.iso /mnt/centos
