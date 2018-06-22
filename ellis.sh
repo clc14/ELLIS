@@ -7,9 +7,9 @@
 # Version: 0.2 2017-03-06
 # License: GPLv2 (https://www.gnu.org/licenses/gpl-2.0.en.html)
 
-ELLISVER="0.2"
+ELLISVER="0.3"
 
-REQVER="7.3"
+REQVER="7.5"
 CHECKVER=true
 
 ## This script is tested only against the current version of CentOS.
@@ -22,18 +22,23 @@ CHECKVER=true
 ##################################
 
 ## By default, this script creates everything under the "example.com" name space.
-
 LABHOST="lab"
 LABDOMAIN="example.com"
 SMBWKGP="EXAMPLE"
 KRB5REALM="EXAMPLE.COM"
+
+# admin passwords
 KRB5PASSWD="admin"
 LDAPPASSWD="admin"
-LU01PASSWD="password"
-LU02PASSWD="password"
 ADMNPASSWD="admin"
-USERPASSWD="password"
+
+# user passwords (local, ldap, kerberos, and samba)
+USER1PASSWD="password123"
+USER2PASSWD="password456"
+
+# VM account passwords
 VMROOTPASS="admin"
+VMUSERPASS="password"
 
 ## LDAP parameters
 LDAPPATH="dc=example,dc=com"
@@ -41,8 +46,8 @@ LDAPBASE="example"
 
 ## Certificate fields
 CERTCNTRY="US"
-CERTSTATE="North Carolina"
-CERTLOC="Charlotte"
+CERTSTATE="South Dakota"
+CERTLOC="Sioux Falls"
 CERTORG="Example, Inc."
 CERTOU="Enterprise Linux Lab"
 CERTCN="$LABHOST.$LABDOMAIN"
@@ -50,7 +55,7 @@ CERTEMAIL="lab@$LABDOMAIN"
 CERTPASSWD="admin"
 
 ## Kernel update URL - this kernel should be newer than the one on the installation media
-KERNUPDURL="http://mirror.centos.org/centos-7/7/updates/x86_64/Packages/kernel-3.10.0-514.10.2.el7.x86_64.rpm"
+KERNUPDURL="http://mirror.centos.org/centos-7/7/updates/x86_64/Packages/kernel-3.10.0-862.3.3.el7.x86_64.rpm"
 
 ################################
 ## End user-defined variables ## 
@@ -72,7 +77,7 @@ if [ "$(whoami)" != "root" ]; then
     exit 1;
 fi
 
-## Check to make sure we're running CentOS 7.2 or 7.3
+## Check to make sure we're running CentOS 7.5
 
 if [ -f /etc/redhat-release ]; then
   OS_MAJOR=$(rpm -qa \*-release | grep centos | cut -d"-" -f3);
@@ -115,8 +120,8 @@ restorecon -Rv /home/guests
 ## Create lab users
 useradd -d /home/guests/ldapuser01 -u 2001 ldapuser01
 useradd -d /home/guests/ldapuser02 -u 2002 ldapuser02
-echo $LU01PASSWD | passwd --stdin ldapuser01
-echo $LU02PASSWD | passwd --stdin ldapuser02
+echo $USER1PASSWD | passwd --stdin ldapuser01
+echo $USER2PASSWD | passwd --stdin ldapuser02
 
 ## Add dummy files and directories to homes
 echo "File1 contents" > /home/guests/ldapuser01/file1
@@ -330,8 +335,8 @@ cat <<EOF > /etc/samba/smb.conf
   writable		= yes
 EOF
 
-(echo "$USERPASSWD" ; echo "$USERPASSWD") | smbpasswd -s -a ldapuser01
-(echo "$USERPASSWD" ; echo "$USERPASSWD") | smbpasswd -s -a ldapuser02
+(echo "$USER1PASSWD" ; echo "$USER1PASSWD") | smbpasswd -s -a ldapuser01
+(echo "$USER2PASSWD" ; echo "$USER2PASSWD") | smbpasswd -s -a ldapuser02
 
 systemctl enable smb
 systemctl start smb
@@ -344,7 +349,7 @@ systemctl start smb
 ## Begin HTTPD setup ##
 #######################
 
-yum -y install httpd elinks
+yum -y install httpd lynx
 
 ## Create a base repo location
 ## Copy the enterprise Linux installation media contents into this directory
@@ -549,19 +554,19 @@ normally, or you may use the VM build scripts that are located in /root to build
 <p>An LDAP directory has been created under the $LDAPPATH namespace.<br>
 There are two LDAP user accounts:<br>
 &nbsp;&nbsp;ldapuser01<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: $USERPASSWD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: $USER1PASSWD<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;home dir: /home/guests/ldapuser01<br><br>
 
 &nbsp;&nbsp;ldapuser02<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: $USERPASSWD<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;home dir: /home/guests/ldapuser01</p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: $USER2PASSWD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;home dir: /home/guests/ldapuser02</p>
 
 <p>A Kerberos KDC and realm for $KRB5REALM have been created.<br>
 There are two Kerberos-enabled user accounts:<br>
 &nbsp;&nbsp;ldapuser01<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: $USERPASSWD<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: $USER1PASSWD<br>
 &nbsp;&nbsp;ldapuser02<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: $USERPASSWD</p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: $USER2PASSWD</p>
 
 <p>The following Kerberos server principals have also been created:</p>
 <p>host/$LABHOST.$LABDOMAIN@$KRB5REALM<br>
@@ -572,8 +577,11 @@ nfs/server2.$LABDOMAIN@$KRB5REALM</p>
 
 <p>Keytabs for server1 and server2 are available (see Lab Resources below).</p>
 
-<p>Local user accounts for ldapuser01 and ldapuser02 also exist. The password for these accounts
-is '$USERPASSWD'.</p>
+<p>Local user accounts for ldapuser01 and ldapuser02 also exist. The password for these accounts are:<br>
+&nbsp;&nbsp;ldapuser01<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: $USER1PASSWD<br>
+&nbsp;&nbsp;ldapuser02<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: $USER2PASSWD</p>
 
 <p>NTP time service is installed on the lab host, and it is configured to allow time sync to the 
 VMs on the defined virtual networks. Lab VMs should be configured to get their time from
@@ -632,6 +640,9 @@ server2:  <a href="http://$LABHOST.$LABDOMAIN/ks/server2-ks.cfg">http://$LABHOST
 /root/mkserver2.sh</p>
 
 <p><strong>IMPORTANT:</strong> In order to use the provided build scripts, you must first copy your enterprise Linux installation media into the /var/www/html/repo directory.</p>
+
+<p>The VM 'root' account password will be set to: $VMROOTPASS</p>
+<p>A local user account named 'user1' will be created in each VM, with a password of: $VMUSERPASS</p>
 
 </body>
 </html>
@@ -743,8 +754,8 @@ systemctl start krb5kdc kadmin
 
 ## Create user principals
 kadmin.local -q "addprinc -pw $ADMNPASSWD root/admin"
-kadmin.local -q "addprinc -pw $USERPASSWD ldapuser01"
-kadmin.local -q "addprinc -pw $USERPASSWD ldapuser02"
+kadmin.local -q "addprinc -pw $USER1PASSWD ldapuser01"
+kadmin.local -q "addprinc -pw $USER2PASSWD ldapuser02"
 
 ## Create KDC principals
 kadmin.local -q "addprinc -randkey host/$LABHOST.$LABDOMAIN"
@@ -922,7 +933,7 @@ keyboard --vckeymap=us --xlayouts='us'
 network  --bootproto=dhcp --device=eth0 --onboot=on --ipv6=auto
 network  --hostname=localhost.localdomain
 rootpw $VMROOTPASS
-user --name=user1 --password=$USERPASSWD --shell=/bin/bash --uid=4000
+user --name=user1 --password=$VMUSERPASS --shell=/bin/bash --uid=4000
 auth --enableshadow --passalgo=sha512
 reboot
 timezone America/New_York --isUtc
@@ -966,7 +977,7 @@ keyboard --vckeymap=us --xlayouts='us'
 network  --bootproto=static --device=eth0 --ip=192.168.201.101 --netmask=255.255.255.0 --gateway=192.168.201.1 --onboot=on --ipv6=auto
 network  --hostname=server1.$LABDOMAIN
 rootpw $VMROOTPASS
-user --name=user1 --password=$USERPASSWD --shell=/bin/bash --uid=4000
+user --name=user1 --password=$VMUSERPASS --shell=/bin/bash --uid=4000
 auth --enableshadow --passalgo=sha512
 reboot
 timezone America/New_York --isUtc
@@ -1012,7 +1023,7 @@ keyboard --vckeymap=us --xlayouts='us'
 network  --bootproto=static --device=eth0 --ip=192.168.201.102 --netmask=255.255.255.0 --gateway=192.168.201.1 --onboot=on --ipv6=auto
 network  --hostname=server2.$LABDOMAIN
 rootpw $VMROOTPASS
-user --name=user1 --password=$USERPASSWD --shell=/bin/bash --uid=4000
+user --name=user1 --password=$VMUSERPASS --shell=/bin/bash --uid=4000
 auth --enableshadow --passalgo=sha512
 reboot
 timezone America/New_York --isUtc
@@ -1059,11 +1070,11 @@ EOF
 cat <<EOF > /root/mkserver0.sh
 virsh vol-create-as default server0.qcow2 20G --format qcow2
 virt-install --name=server0 \
-  --ram=1024 \
+  --ram=2048 \
   --vcpu=1 \
   --autostart \
   --os-type=linux \
-  --os-variant=rhel7 \
+  --os-variant=rhel7.5 \
   --location=http://$LABHOST.$LABDOMAIN/repo/ \
   --disk vol=default/server0.qcow2 \
   --network network=virtnet1 \
@@ -1074,11 +1085,11 @@ chmod 700 /root/mkserver0.sh
 cat <<EOF > /root/mkserver1.sh
 virsh vol-create-as default server1.qcow2 20G --format qcow2
 virt-install --name=server1 \
-  --ram=1024 \
+  --ram=2048 \
   --vcpu=1 \
   --autostart \
   --os-type=linux \
-  --os-variant=rhel7 \
+  --os-variant=rhel7.5 \
   --location=http://$LABHOST.$LABDOMAIN/repo/ \
   --disk vol=default/server1.qcow2 \
   --network network=virtnet1 \
@@ -1091,11 +1102,11 @@ chmod 700 /root/mkserver1.sh
 cat <<EOF > /root/mkserver2.sh
 virsh vol-create-as default server2.qcow2 20G --format qcow2
 virt-install --name=server2 \
-  --ram=1024 \
+  --ram=2048 \
   --vcpu=1 \
   --autostart \
   --os-type=linux \
-  --os-variant=rhel7 \
+  --os-variant=rhel7.5 \
   --location=http://$LABHOST.$LABDOMAIN/repo/ \
   --disk vol=default/server2.qcow2 \
   --network network=virtnet1 \
@@ -1119,6 +1130,6 @@ echo ""
 echo "Press any key to continue..."
 read -n 1 -s
 
-elinks http://$LABHOST.$LABDOMAIN
+lynx http://$LABHOST.$LABDOMAIN
 
 

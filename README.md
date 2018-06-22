@@ -33,12 +33,17 @@ have reasonable hardware for a VM host. The recommended minimum specifications f
 host are:
 
 - Core i5 processor or better, with Intel-VT support
-- 4GB+ of memory
+- 6GB+ of memory
 - 80GB+ of disk space
 
-This installer has been tested with the following version of CentOS:
+**NOTE**: memory requirements have increased for RHEL7.5/CentOS7.5 from earlier versions. The lab VMs
+are now pre-configured for 2GB of memory instead of the previous 1GB setting. Using less than
+1.5GB, the installer will crash during kickstart. If you need to run more than one VM at a time,
+you'll want to have 6GB or more of physical memory in your lab server.
 
-- 7.3 (1611)
+This installer has now been tested with the following version of CentOS:
+
+- 7.5 (1804)
 
 Running the script on other versions of CentOS is not recommended, but can be done by uncommenting
 the following line:
@@ -57,7 +62,7 @@ The setup process is pretty simple:
 "Minimal Install" (for a headless lab server) or "Server with GUI" (if you intend to 
 use the lab server as your lab station). **NOTE:** Do not provision a separate /home 
 partition. You will need the majority of your disk space to be available under 
-/var/lib/libvirt (for your VM disks).
+`/var/lib/libvirt` (for your VM disks).
 
 2. Update the CentOS install via `yum -y update`. Reboot if necessary.
  
@@ -69,24 +74,32 @@ partition. You will need the majority of your disk space to be available under
         yum -y install git
         git clone https://github.com/sdoconnell/ellis.git && cd ellis
         chmod 755 ellis.sh
-
-    You can download the repo [zip file](https://github.com/sdoconnell/ELLIS/archive/master.zip) and extract it.
+    
+    Or you can download the repo [zip file](https://github.com/sdoconnell/ELLIS/archive/master.zip) and extract it.
     
     Or you can download the `ellis.sh` script directly, using curl:
     
         curl -o ellis.sh https://raw.githubusercontent.com/sdoconnell/ellis/master/ellis.sh && chmod 755 ellis.sh
-
-4. Once it is installed, run `./ellis.sh`. ELLIS will download and install all of the 
-required packages from the standard CentOS repos and configure everything automatically.
-The process should take five to ten minutes, depending on your Internet speed and lab server
-hardware resources.
+    
+4. Once the script is installed on your lab server, run `./ellis.sh`. ELLIS will download and
+install all of the required packages from the standard CentOS repos and configure everything
+automatically. The process should take five to ten minutes, depending on your Internet speed
+and lab server hardware resources.
  
-5. Copy all of the files from your enterprise Linux installation media (either CentOS 7 or RHEL 7)
-into the /var/www/html/repo directory. For example:
+5. Copy all of the files from your enterprise Linux installation media (either CentOS 7.5 or RHEL 7.5)
+into the /var/www/html/repo directory on the lab server. For example, to copy the files from an ISO image:
 
-        cp -R /media/usbstick/* /var/www/html/repo
+        mkdir -p /mnt/centos
+        mount CentOS-7-x86_64-DVD-1804.iso /mnt/centos
+        rsync -a /mnt/centos/ /var/www/html/repo/
+        umount /mnt/centos
 
 5. Run the provided build scripts placed in /root to setup your lab VMs *(optional)*.
+
+        cd /root
+        ./mkserver0.sh
+        ./mkserver1.sh
+        ./mkserver2.sh
 
 ## Lab resources
 
