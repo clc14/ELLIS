@@ -848,13 +848,11 @@ olcRootPW: $(cat /etc/openldap/passwd)
 
 dn: cn=config
 changetype: modify
-replace: olcTLSCertificateFile
-olcTLSCertificateFile: /etc/openldap/certs/cert.pem
-
-dn: cn=config
-changetype: modify
 replace: olcTLSCertificateKeyFile
 olcTLSCertificateKeyFile: /etc/openldap/certs/priv.pem
+-
+replace: olcTLSCertificateFile
+olcTLSCertificateFile: /etc/openldap/certs/cert.pem
 
 dn: cn=config
 changetype: modify
