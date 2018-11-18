@@ -370,27 +370,115 @@ mkdir -p /var/www/html/ldap #cert added later
 ## Create a distribution point for SSL certificates
 mkdir -p /var/www/html/ssl
 
-## Generate CA cert
-openssl genrsa -passout pass:$CERTPASSWD -des3 -out /etc/pki/tls/private/ca.key 4096
+## Create temp openssl.cnf for CA operations
+cat <<EOF > openssl.cnf
+[ ca ]
+default_ca          = CA_default
+
+[ CA_default ]
+certs               = .
+crl_dir             = .
+new_certs_dir       = .
+database            = index.txt
+serial              = serial
+private_key	        = /etc/pki/tls/private/ca.key
+certificate	        = /var/www/html/ssl/ca.crt
+default_md          = sha256
+
+name_opt            = ca_default
+cert_opt            = ca_default
+default_days        = 375
+preserve            = no
+policy              = policy_loose
+
+[ policy_loose ]
+countryName             = optional
+stateOrProvinceName     = optional
+localityName            = optional
+organizationName        = optional
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
+
+[ req ]
+default_bits            = 2048
+default_md              = sha256
+string_mask             = utf8only
+default_keyfile         = privkey.pem
+distinguished_name      = req_distinguished_name
+req_extensions          = v3_req
+
+[ req_distinguished_name ]
+countryName             = Country Name (2 letter code)
+countryName_min			= 2
+countryName_max			= 2
+stateOrProvinceName     = State or Province Name (full name)
+localityName            = Locality Name (eg, city)
+0.organizationName		= Organization Name (eg, company)
+organizationalUnitName		= Organizational Unit Name (eg, section)
+commonName              = Common Name (e.g. server FQDN or YOUR name)
+commonName_max          = 64
+emailAddress            = Email Address
+emailAddress_max        = 64
+
+[ v3_req ]
+basicConstraints        = CA:FALSE
+keyUsage                = critical, nonRepudiation, digitalSignature, keyEncipherment
+
+[ server_cert ]
+basicConstraints        = CA:FALSE
+nsCertType              = server
+nsComment               = "OpenSSL Server Certificate"
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid,issuer:always
+keyUsage                = critical, digitalSignature, keyEncipherment
+extendedKeyUsage        = serverAuth
+subjectAltName          = "DNS:server1.$LABDOMAIN,DNS:$LABDOMAIN"
+
+EOF
+
+## Create temp files needed by openssl CA operations
+touch index.txt index.txt.attr
+echo 1000 > serial
+
+## Generate CA key
+openssl genrsa -aes256 -passout pass:$CERTPASSWD -out /etc/pki/tls/private/ca.key 4096
 chmod 600 /etc/pki/tls/private/ca.key
+
+## Generate CA cert
 openssl req -new -x509 -days 365 -key /etc/pki/tls/private/ca.key -out /var/www/html/ssl/ca.crt \
 -subj "/C=$CERTCNTRY/ST=$CERTSTATE/L=$CERTLOC/O=$CERTORG/OU=$CERTOU/CN=$CERTCN/emailAddress=$CERTEMAIL" \
 -passin pass:$CERTPASSWD
 chmod 644 /var/www/html/ssl/ca.crt
 
-## Generate certificate and key for server1.example.com
-openssl req -new -newkey rsa:2048 -nodes -keyout /var/www/html/ssl/server1.key.secure \
--out /var/www/html/ssl/server1.csr -passin pass:$CERTPASSWD \
+## Generate server1 key
+openssl genrsa -aes256 -passout pass:$CERTPASSWD -out /var/www/html/ssl/server1.key.secure 2048
+openssl rsa -in /var/www/html/ssl/server1.key.secure -out /var/www/html/ssl/server1.key \
+-passin pass:$CERTPASSWD  
+rm -f /var/www/html/ssl/server1.key.secure
+chmod 644 /var/www/html/ssl/server1.key
+
+## Generate server1 CSR
+openssl req -config openssl.cnf -new -sha256 -days 365 -key /var/www/html/ssl/server1.key \
+-out server1.csr \
 -subj "/C=$CERTCNTRY/ST=$CERTSTATE/L=$CERTLOC/O=$CERTORG/OU=$CERTOU/CN=server1.$LABDOMAIN/emailAddress=$CERTEMAIL"
-openssl x509 -req -days 365 -in /var/www/html/ssl/server1.csr -signkey /etc/pki/tls/private/ca.key \
+
+## Sign server1 CSR with CA cert and output to server1 cert
+openssl ca -batch -config openssl.cnf -extensions server_cert -days 365 -in server1.csr \
 -out /var/www/html/ssl/server1.crt -passin pass:$CERTPASSWD
 chmod 644 /var/www/html/ssl/server1.crt
-openssl rsa -in /var/www/html/ssl/server1.key.secure -out /var/www/html/ssl/server1.key \
--passin pass:$CERTPASSWD
-chmod 644 /var/www/html/ssl/server1.key
-rm -f /var/www/html/ssl/server1.csr
-rm -f /var/www/html/ssl/server1.key.secure
 
+## Clean up working files from cert generation
+rm -f server1.csr
+rm -f openssl.cnf
+rm -f serial
+rm -f serial.old
+rm -f index.txt
+rm -f index.txt.old
+rm -f index.txt.attr
+rm -f index.txt.attr.old
+rm -f 1000.pem
+ 
 ## Provide access to the ldapuser01 and ldapuser02 mail spools
 mkdir /var/www/html/mail
 touch /var/www/html/mail/ldapuser01.txt
