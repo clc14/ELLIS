@@ -15,7 +15,7 @@ CHECKVER=true
 ## This script is tested only against the current version of CentOS.
 ## If you want to run this script on an unsupported version of CentOS
 ## you can disable version checking by uncommenting the following line.
-#CHECKVER=false
+CHECKVER=false
 
 ##################################
 ## Begin user-defined variables ##
