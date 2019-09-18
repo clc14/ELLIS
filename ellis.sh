@@ -1053,6 +1053,7 @@ kexec-tools
 %end
 %post
 rm -f /etc/yum.repos.d/*.repo
+rm -f /etc/sysconfig/network-scripts/ifcfg-eth?
 %end
 EOF
 
@@ -1102,6 +1103,7 @@ pam_krb5
 %end
 %post
 rm -f /etc/yum.repos.d/*.repo
+rm -f /etc/sysconfig/network-scripts/ifcfg-eth?
 %end
 EOF
 
@@ -1151,6 +1153,7 @@ pam_krb5
 %end
 %post
 rm -f /etc/yum.repos.d/*.repo
+rm -f /etc/sysconfig/network-scripts/ifcfg-eth?
 %end
 EOF
 
