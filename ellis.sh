@@ -1051,6 +1051,9 @@ text
 kexec-tools
 
 %end
+%post
+rm -f /etc/yum.repos.d/*.repo
+%end
 EOF
 
 ## Kickstart file for server1
@@ -1097,6 +1100,9 @@ krb5-workstation
 pam_krb5
 
 %end
+%post
+rm -f /etc/yum.repos.d/*.repo
+%end
 EOF
 
 ## Kickstart file for server2
@@ -1142,6 +1148,9 @@ kexec-tools
 krb5-workstation
 pam_krb5
 
+%end
+%post
+rm -f /etc/yum.repos.d/*.repo
 %end
 EOF
 
